@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        #slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .caption {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .controls-container {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .control-btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .prev-next {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        #pause-btn {
+            background-color: #d9534f;
+        }
+
+        #play-btn {
+            background-color: #5bc0de;
+        }
+    </style>
+</head>
+<body>
+
+<div id="slider-container">
+    <div id="slider">
+        <div class="slide">
+            <img src="Boat.jpg" alt="Image 1">
+            <div class="caption">Boat Image</div>
+        </div>
+        <div class="slide">
+            <img src="Fitness.jpg" alt="Image 2">
+            <div class="caption">Fitness Hub</div>
+        </div>
+        <div class="slide">
+            <img src="Spookymoon.jpg" alt="Image 3">
+            <div class="caption">Spookymoon</div>
+        </div>
+        <!-- Add more slides as needed -->
+    </div>
+
+    <div class="controls-container">
+        <button id="pause-btn" class="control-btn" onclick="pauseSlider()">Pause</button>
+        <button id="play-btn" class="control-btn" onclick="playSlider()">Play</button>
+    </div>
+
+    <div class="prev-next">
+        <button class="control-btn" onclick="prevSlide()">Previous</button>
+        <button class="control-btn" onclick="nextSlide()">Next</button>
+    </div>
+</div>
+
+<script>
+    let currentIndex = 0;
+    let sliderInterval;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        currentIndex = (index + totalSlides) % totalSlides;
+        document.getElementById('slider').style.transform = `translateX(${-currentIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+        showSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentIndex - 1);
+    }
+
+    function playSlider() {
+        if (!sliderInterval) {
+            sliderInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+        }
+    }
+
+    function pauseSlider() {
+        clearInterval(sliderInterval);
+        sliderInterval = null; // Reset the interval variable
+    }
+
+    playSlider(); // Auto start the slider
+</script>
+
+
+</body>
+</html>
